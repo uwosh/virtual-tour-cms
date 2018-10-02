@@ -96,3 +96,21 @@ function emergency_phone_location_save_meta_box( $post_id ){
 }
 // Hooking the function to save data when the update button is clicked
 add_action( 'save_post_emergency-phones', 'emergency_phone_location_save_meta_box' );
+
+// Configure REST API to include emergency phone location data
+function send_emergency_phone_location_to_rest(){
+    register_rest_field( 'emergency-phones', 'location', array(
+            'get_callback' => 'parse_emergency_phones_location_meta_data_for_api'
+        )
+    );
+}
+// Hooking the REST API to include the emergency phone location meta data
+add_action( 'rest_api_init', 'send_emergency_phone_location_to_rest' );
+
+// Function that grabs the emergency phones meta data
+function parse_emergency_phones_location_meta_data_for_api( $post ) {
+    return array(
+        'latitude' => get_post_meta( $post["id"], '_latitude', true ),
+        'longitude' => get_post_meta( $post["id"], '_longitude', true )
+    );
+}
