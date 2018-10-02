@@ -12,10 +12,11 @@ function create_emergency_phones_post_type() {
             'public' => true,
             'has_archive' => true,
             'menu_icon' => 'dashicons-phone',
+            'show_in_rest' => true,
             'rewrite' => array('slug' => 'emergency-phones'),
         )
     );
 }
 
-// Hooking up our function to theme setup
+// Hooking up our emergency phones custom post type to theme setup
 add_action( 'init', 'create_emergency_phones_post_type' );
