@@ -35,16 +35,64 @@ function create_emergency_phones_post_type() {
         )
     );
 }
+// Hooking up our emergency phones custom post type to theme setup
+add_action( 'init', 'create_emergency_phones_post_type' );
 
 // Meta box setup callback function
 function emergency_phones_meta_box_callback(){
-    add_meta_box('emergency-phone-address', 'Emergency Phone Location', 'emergency_phone_location_meta_box', 'emergency-phones');
+    add_meta_box('emergency-phone-address', 'Emergency Phone Location', 'emergency_phone_location_meta_box', 'emergency-phones', 'side');
 }
 
-// Build the emergency phone location meta box
-function emergency_phone_location_meta_box(){
-    echo 'This is the emergency phone location meta box';
+/**
+ * Build the emergency phone location meta box
+ *
+ * @param post $post The post object
+ */
+function emergency_phone_location_meta_box( $post ){
+    // make sure the form request comes from WordPress
+	wp_nonce_field( basename( __FILE__ ), 'location_meta_box_nonce' );
+
+    $latitude = get_post_meta( $post->ID, '_latitude', true );
+    $longitude = get_post_meta( $post->ID, '_longitude', true );
+    ?>
+    
+    Latitude: <input type="number" name="latitude" value="<?php echo $latitude; ?>" placeholder="Enter a latitude" />
+    Longitude: <input type="number" name="longitude" value="<?php echo $longitude; ?>" placeholder="Enter a longitude" />
+
+    <?php
 }
 
+/**
+ * Store emergency phone location meta box data
+ *
+ * @param int $post_id The post ID.
+ */
+function emergency_phone_location_save_meta_box( $post_id ){
+    // verify taxonomies meta box nonce
+    if ( !isset( $_POST['location_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['location_meta_box_nonce'], basename( __FILE__ ) ) ){
+        return;
+    }
+
+    // return if autosave
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+		return;
+    }
+    
+    // Check the user's permissions.
+	if ( ! current_user_can( 'edit_post', $post_id ) ){
+		return;
+    }
+    
+    // store location meta box fields
+	// latitude string
+	if ( isset( $_REQUEST['latitude'] ) ) {
+		update_post_meta( $post_id, '_latitude', sanitize_text_field( $_POST['latitude'] ) );
+	}
+	
+	// longitude string
+	if ( isset( $_REQUEST['longitude'] ) ) {
+		update_post_meta( $post_id, '_longitude', sanitize_text_field( $_POST['longitude'] ) );
+	}
+}
 // Hooking up our emergency phones custom post type to theme setup
-add_action( 'init', 'create_emergency_phones_post_type' );
+add_action( 'save_post_emergency-phones', 'emergency_phone_location_save_meta_box' );
