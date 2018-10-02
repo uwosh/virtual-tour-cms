@@ -30,9 +30,20 @@ function create_emergency_phones_post_type() {
             'has_archive' => true,
             'menu_icon' => 'dashicons-phone',
             'show_in_rest' => true,
+            'register_meta_box_cb' => 'emergency_phones_meta_box_callback',
             'rewrite' => array('slug' => 'emergency-phones'),
         )
     );
+}
+
+// Meta box setup callback function
+function emergency_phones_meta_box_callback(){
+    add_meta_box('emergency-phone-address', 'Emergency Phone Location', 'emergency_phone_location_meta_box', 'emergency-phones');
+}
+
+// Build the emergency phone location meta box
+function emergency_phone_location_meta_box(){
+    echo 'This is the emergency phone location meta box';
 }
 
 // Hooking up our emergency phones custom post type to theme setup
