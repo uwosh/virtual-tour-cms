@@ -94,5 +94,5 @@ function emergency_phone_location_save_meta_box( $post_id ){
 		update_post_meta( $post_id, '_longitude', sanitize_text_field( $_POST['longitude'] ) );
 	}
 }
-// Hooking up our emergency phones custom post type to theme setup
+// Hooking the function to save data when the update button is clicked
 add_action( 'save_post_emergency-phones', 'emergency_phone_location_save_meta_box' );
