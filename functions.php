@@ -107,7 +107,7 @@ function send_emergency_phone_location_to_rest(){
 // Hooking the REST API to include the emergency phone location meta data
 add_action( 'rest_api_init', 'send_emergency_phone_location_to_rest' );
 
-// Function that grabs the emergency phones meta data
+// Function that grabs the emergency phones meta data for the REST API
 function parse_emergency_phones_location_meta_data_for_api( $post ) {
     return array(
         'latitude' => get_post_meta( $post["id"], '_latitude', true ),
