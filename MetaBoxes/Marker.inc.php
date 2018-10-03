@@ -26,11 +26,6 @@ class Marker {
         add_action( 'rest_api_init', array( $this, 'send_location_to_rest' ) );
     }
 
-    // Meta box setup callback function
-    function meta_box_callback(){
-        add_meta_box( $this->slug . '-address', $this->label . ' Location', array( $this, 'location_meta_box' ), $this->slug, 'side');
-    }
-
     /**
      * Build the location meta box
      *
