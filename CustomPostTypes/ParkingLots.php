@@ -1,6 +1,6 @@
 <?php
 
-class EmergencyPhones{
+class ParkingLots{
     private $slug;
     private $singular_label;
     private $plural_label;
@@ -8,9 +8,9 @@ class EmergencyPhones{
 
     public function __construct(){
         // Declaring variables for the custom post type
-        $this->slug = "emergency-phones";
-        $this->singular_label = "Emergency Phone";
-        $this->plural_label = "Emergency Phones";
+        $this->slug = "parking-lots";
+        $this->singular_label = "Parking Lot";
+        $this->plural_label = "Parking Lots";
 
         // Declaring meta boxes for the custom post type
         $this->location_marker = new Marker( $this->slug, $this->singular_label );
@@ -51,7 +51,7 @@ class EmergencyPhones{
                 ),
                 'public' => true,
                 'has_archive' => true,
-                'menu_icon' => 'dashicons-phone',
+                'menu_icon' => 'dashicons-location',
                 'show_in_rest' => true,
                 'register_meta_box_cb' => array( $this, 'meta_box_callback' ),
                 'rewrite' => array('slug' => $this->slug),
