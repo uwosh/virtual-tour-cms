@@ -33,7 +33,7 @@ class Marker {
      */
     function create_meta_box( $post ){
         // make sure the form request comes from WordPress
-        wp_nonce_field( basename( __FILE__ ), 'meta_box_nonce' );
+        wp_nonce_field( basename( __FILE__ ), 'marker_meta_box_nonce' );
 
         $latitude = get_post_meta( $post->ID, '_latitude', true );
         $longitude = get_post_meta( $post->ID, '_longitude', true );
@@ -53,7 +53,7 @@ class Marker {
      */
     function save_meta_box( $post_id ){
         // verify taxonomies meta box nonce
-        if ( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], basename( __FILE__ ) ) ){
+        if ( !isset( $_POST['marker_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['marker_meta_box_nonce'], basename( __FILE__ ) ) ){
             return;
         }
 

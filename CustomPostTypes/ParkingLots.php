@@ -5,6 +5,7 @@ class ParkingLots{
     private $singular_label;
     private $plural_label;
     private $location_marker;
+    private $lot_type;
 
     public function __construct(){
         // Declaring variables for the custom post type
@@ -14,6 +15,7 @@ class ParkingLots{
 
         // Declaring meta boxes for the custom post type
         $this->location_marker = new Marker( $this->slug, $this->singular_label );
+        $this->lot_type = new LotType( $this->slug, $this->singular_label );
 
         $this->init();
     }
@@ -61,6 +63,7 @@ class ParkingLots{
     
     // Meta box setup callback function
     function meta_box_callback(){
-        add_meta_box( $this->slug . '-address', $this->singular_label . ' Location', array( $this->location_marker, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-location', $this->singular_label . ' Location', array( $this->location_marker, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-types', $this->singular_label . ' Types', array( $this->lot_type, 'create_meta_box' ), $this->slug, 'side');
     }
 }
