@@ -5,31 +5,33 @@ include( "MetaBoxes/Marker.inc.php" );
 // Create Emergency Phones Custom Post Type
 function create_emergency_phones_post_type() {
     $slug = "emergency-phones";
-    $emergency_phone_marker = new Marker( $slug, "Emergency Phone" );
+    $singular_label = "Emergency Phone";
+    $plural_label = "Emergency Phones";
+    $emergency_phone_marker = new Marker( $slug, $singular_label );
 
     register_post_type( $slug,
     // Options
         array(
             'labels' => array(
-                'name' => __( 'Emergency Phones' ),
-                'singular_name' => __( 'Emergency Phone' ),
-                'add_new' => __( 'Add Emergency Phone' ),
-                'add_new_item' => __( 'Add New Emergency Phone' ),
-                'edit_item' => __( 'Edit Emergency Phone' ),
-                'new_item' => __( 'New Emergency Phone' ),
-                'view_item' => __( 'View Emergency Phone' ),
-                'view_items' => __( 'View Emergency Phones' ),
-                'search_items' => __( 'Search Emergency Phones' ),
-                'not_found' => __( 'No Emergency Phones found' ),
-                'not_found_in_trash' => __( 'No Emergency Phones found in Trash' ),
-                'all_items' => __( 'All Emergency Phones' ),
-                'archives' => __( 'Emergency Phone Archives' ),
-                'attributes' => __( 'Emergency Phone Attributes' ),
-                'insert_into_item' => __( 'Insert into Emergency Phone' ),
-                'uploaded_to_this_item' => __( 'Uploaded to this emergency phone' ),
-                'filter_items_list' => __( 'Filter emergency phones list' ),
-                'items_list_navigation' => __( 'Emergency phones list navigation' ),
-                'items_list' => __( 'Emergency phones list' ),
+                'name' => __( $plural_label ),
+                'singular_name' => __( $singular_label ),
+                'add_new' => __( 'Add ' . $singular_label ),
+                'add_new_item' => __( 'Add New ' . $singular_label ),
+                'edit_item' => __( 'Edit ' . $singular_label ),
+                'new_item' => __( 'New ' . $singular_label ),
+                'view_item' => __( 'View ' . $singular_label ),
+                'view_items' => __( 'View ' . $plural_label ),
+                'search_items' => __( 'Search ' . $plural_label ),
+                'not_found' => __( 'No ' . $plural_label . ' found' ),
+                'not_found_in_trash' => __( 'No ' . $plural_label . ' found in Trash' ),
+                'all_items' => __( 'All ' . $plural_label ),
+                'archives' => __( $singular_label . ' Archives' ),
+                'attributes' => __( $singular_label . ' Attributes' ),
+                'insert_into_item' => __( 'Insert into ' . $singular_label ),
+                'uploaded_to_this_item' => __( 'Uploaded to this ' . $singular_label ),
+                'filter_items_list' => __( 'Filter ' . $plural_label . ' list' ),
+                'items_list_navigation' => __( $plural_label . ' list navigation' ),
+                'items_list' => __( $plural_label . ' list' ),
             ),
             'public' => true,
             'has_archive' => true,
