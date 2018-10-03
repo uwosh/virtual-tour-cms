@@ -20,10 +20,10 @@ class Marker {
 
     function init(){
         // Hooking the function to save data when the update button is clicked
-        add_action( 'save_post_' . $this->slug, array( $this, 'location_save_meta_box' ) );
+        add_action( 'save_post_' . $this->slug, array( $this, 'save_meta_box' ) );
 
         // Hooking the REST API to include the location meta data
-        add_action( 'rest_api_init', array( $this, 'send_location_to_rest' ) );
+        add_action( 'rest_api_init', array( $this, 'send_data_to_rest' ) );
     }
 
     /**
@@ -31,9 +31,9 @@ class Marker {
      *
      * @param post $post The post object
      */
-    function location_meta_box( $post ){
+    function create_meta_box( $post ){
         // make sure the form request comes from WordPress
-        wp_nonce_field( basename( __FILE__ ), 'location_meta_box_nonce' );
+        wp_nonce_field( basename( __FILE__ ), 'meta_box_nonce' );
 
         $latitude = get_post_meta( $post->ID, '_latitude', true );
         $longitude = get_post_meta( $post->ID, '_longitude', true );
@@ -51,9 +51,9 @@ class Marker {
      *
      * @param int $post_id The post ID.
      */
-    function location_save_meta_box( $post_id ){
+    function save_meta_box( $post_id ){
         // verify taxonomies meta box nonce
-        if ( !isset( $_POST['location_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['location_meta_box_nonce'], basename( __FILE__ ) ) ){
+        if ( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], basename( __FILE__ ) ) ){
             return;
         }
 
@@ -80,15 +80,15 @@ class Marker {
     }
 
     // Configure REST API to include location data
-    function send_location_to_rest(){
+    function send_data_to_rest(){
         register_rest_field( $this->slug, 'location', array(
-                'get_callback' => array( $this, 'parse_location_meta_data_for_api' )
+                'get_callback' => array( $this, 'parse_meta_data_for_api' )
             )
         );
     }
 
     // Function that grabs the meta data for the REST API
-    function parse_location_meta_data_for_api( $post ) {
+    function parse_meta_data_for_api( $post ) {
         return array(
             'latitude' => get_post_meta( $post["id"], '_latitude', true ),
             'longitude' => get_post_meta( $post["id"], '_longitude', true )
