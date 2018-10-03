@@ -9,3 +9,5 @@ foreach ( glob( get_template_directory() . "/MetaBoxes/*.php" ) as $filename ){
 foreach ( glob( get_template_directory() . "/CustomPostTypes/*.php" ) as $filename ){
     include( $filename );
 }
+
+$emergency_phones = new EmergencyPhones();
