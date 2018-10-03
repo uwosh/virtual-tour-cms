@@ -1,11 +1,11 @@
 <?php
 
-// Create Emergency Phones Custom Post Type
-function create_emergency_phones_post_type() {
-    $slug = "emergency-phones";
-    $singular_label = "Emergency Phone";
-    $plural_label = "Emergency Phones";
-    $emergency_phone_marker = new Marker( $slug, $singular_label );
+// Create Parking Lots Custom Post Type
+function create_parking_lots_post_type() {
+    $slug = "parking-lots";
+    $singular_label = "Parking Lot";
+    $plural_label = "Parking Lots";
+    $parking_lots_marker = new Marker( $slug, $singular_label );
 
     register_post_type( $slug,
     // Options
@@ -33,12 +33,12 @@ function create_emergency_phones_post_type() {
             ),
             'public' => true,
             'has_archive' => true,
-            'menu_icon' => 'dashicons-phone',
+            'menu_icon' => 'dashicons-location',
             'show_in_rest' => true,
-            'register_meta_box_cb' => array( $emergency_phone_marker, 'meta_box_callback' ), 
+            'register_meta_box_cb' => array( $parking_lots_marker, 'meta_box_callback' ), 
             'rewrite' => array('slug' => $slug),
         )
     );
 }
 // Hooking up our emergency phones custom post type to theme setup
-add_action( 'init', 'create_emergency_phones_post_type' );
+add_action( 'init', 'create_parking_lots_post_type' );
