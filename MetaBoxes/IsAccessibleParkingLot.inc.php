@@ -1,6 +1,6 @@
 <?php
 
-class LotType {
+class IsAccessibleParkingLot {
     private $slug;
     private $label;
 
@@ -33,16 +33,16 @@ class LotType {
      */
     function create_meta_box( $post ){
         // make sure the form request comes from WordPress
-        wp_nonce_field( basename( __FILE__ ), 'lot_type_meta_box_nonce' );
+        wp_nonce_field( basename( __FILE__ ), 'is_accessible_parking_lot_meta_box_nonce' );
 
-        $lot_types = array( "Employee Lot", "Commuter Lot", "Visitor Lot", "Staff Lot", "Resident Lot", "Restricted Lot", "Reserved Lot", "Remote Lot", "Evans Hall Residents", "Stewart Hall Residents", "Fletcher Hall Residents" );
-        $selected_lot_types = ( get_post_meta( $post->ID, '_lot_types', true ) ) ? get_post_meta( $post->ID, '_lot_types', true ) : array();
+        $isAccessibleParkingLot = get_post_meta( $post->ID, '_is_accessible_parking_lot', true );
 
-        foreach( $lot_types as $lot_type ){
-            ?>
-            <input type="checkbox" name="lot_types[]" value="<?php echo $lot_type; ?>" <?php checked( ( in_array( $lot_type, $selected_lot_types ) ) ? $lot_type : '', $lot_type ); ?> /><?php echo $lot_type; ?><br />
-            <?php
-        }
+        ?>
+
+        <input type="radio" name="isAccessibleParkingLot" value="1" <?php checked( $isAccessibleParkingLot, '1' ); ?> /> Yes<br />
+		<input type="radio" name="isAccessibleParkingLot" value="0" <?php checked( $isAccessibleParkingLot, '0' ); ?> /> No
+        
+        <?php
     }
 
     /**
@@ -52,7 +52,7 @@ class LotType {
      */
     function save_meta_box( $post_id ){
         // verify taxonomies meta box nonce
-        if ( !isset( $_POST['lot_type_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['lot_type_meta_box_nonce'], basename( __FILE__ ) ) ){
+        if ( !isset( $_POST['is_accessible_parking_lot_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['is_accessible_parking_lot_meta_box_nonce'], basename( __FILE__ ) ) ){
             return;
         }
 
@@ -66,23 +66,15 @@ class LotType {
             return;
         }
         
-        // store lot type meta box fields
-        // lot_types array
-        if( isset( $_POST['lot_types'] ) ){
-            $lot_types = (array) $_POST['lot_types'];
-            // sanitize array
-            $lot_types = array_map( 'sanitize_text_field', $lot_types );
-            // save data
-            update_post_meta( $post_id, '_lot_types', $lot_types );
-        }else{
-            // delete data
-            delete_post_meta( $post_id, '_lot_types' );
+        // store accessibility meta box fields
+        if ( isset( $_REQUEST['isAccessibleParkingLot'] ) ) {
+            update_post_meta( $post_id, '_is_accessible_parking_lot', sanitize_text_field( $_POST['isAccessibleParkingLot'] ) );
         }
     }
 
     // Configure REST API to include location data
     function send_data_to_rest(){
-        register_rest_field( $this->slug, 'lot_types', array(
+        register_rest_field( $this->slug, 'is_accessible_parking_lot', array(
                 'get_callback' => array( $this, 'parse_meta_data_for_api' )
             )
         );
@@ -90,7 +82,11 @@ class LotType {
 
     // Function that grabs the meta data for the REST API
     function parse_meta_data_for_api( $post ) {
-        $selected_lot_types = ( get_post_meta( $post["id"], '_lot_types', true ) ) ? get_post_meta( $post["id"], '_lot_types', true ) : array();
-        return $selected_lot_types;
+        $isAccessibleParkingLot = get_post_meta( $post["id"], '_is_accessible_parking_lot', true );
+        if( $isAccessibleParkingLot === "1" ){
+            return true;
+        } else{
+            return false;
+        }
     }
 }

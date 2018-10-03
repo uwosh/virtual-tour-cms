@@ -10,5 +10,6 @@ foreach ( glob( get_template_directory() . "/CustomPostTypes/*.php" ) as $filena
     include( $filename );
 }
 
+// Instantiating the custom posts
 $emergency_phones = new EmergencyPhones();
 $parking_lots = new ParkingLots();
