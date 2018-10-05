@@ -56,8 +56,8 @@ function emergency_phone_location_meta_box( $post ){
     $longitude = get_post_meta( $post->ID, '_longitude', true );
     ?>
     
-    Latitude: <input type="number" name="latitude" value="<?php echo $latitude; ?>" placeholder="Enter a latitude" />
-    Longitude: <input type="number" name="longitude" value="<?php echo $longitude; ?>" placeholder="Enter a longitude" />
+    Latitude: <input type="number" step="any" name="latitude" value="<?php echo $latitude; ?>" placeholder="Enter a latitude" />
+    Longitude: <input type="number" step="any" name="longitude" value="<?php echo $longitude; ?>" placeholder="Enter a longitude" />
 
     <?php
 }
