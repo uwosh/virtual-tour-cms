@@ -5,6 +5,7 @@ class Buildings{
     private $singular_label;
     private $plural_label;
     private $location_marker;
+    private $address;
 
     public function __construct(){
         // Declaring variables for the custom post type
@@ -14,6 +15,7 @@ class Buildings{
 
         // Declaring meta boxes for the custom post type
         $this->location_marker = new Marker( $this->slug, $this->singular_label );
+        $this->address = new Address( $this->slug, $this->singular_label );
 
         $this->init();
     }
@@ -62,5 +64,6 @@ class Buildings{
     // Meta box setup callback function
     function meta_box_callback(){
         add_meta_box( $this->slug . '-location', $this->singular_label . ' Location', array( $this->location_marker, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-address', $this->singular_label . ' Address', array( $this->address, 'create_meta_box' ), $this->slug, 'normal');
     }
 }
