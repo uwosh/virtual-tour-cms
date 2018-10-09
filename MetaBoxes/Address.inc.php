@@ -64,7 +64,7 @@ class Address{
             <div class="inline">
                 State:<br />
                 <select name="state[]">
-                    <option value="Select a state" <?php echo ($state==="Select a state") ? "selected" : "" ?>>Select a state</option>
+                    <option value="" <?php echo ($state==="Select a state") ? "selected" : "" ?>>Select a state</option>
                     <?php
                     foreach( $states as $current_state ){
                     ?>
