@@ -39,7 +39,7 @@ class Address{
 
         $street = get_post_meta( $post->ID, '_street', true );
         $city = get_post_meta( $post->ID, '_city', true );
-        $state = get_post_meta( $post->ID, '_state', true );
+        $state = get_post_meta( $post->ID, '_state', true )[0]; // always returns an array of length one, so select first element
         $zip = get_post_meta( $post->ID, '_zip', true );
 
         ?>
@@ -64,11 +64,11 @@ class Address{
             <div class="inline">
                 State:<br />
                 <select name="state[]">
-                    <option value="Select a state">Select a state</option>
+                    <option value="Select a state" <?php echo ($state==="Select a state") ? "selected" : "" ?>>Select a state</option>
                     <?php
-                    foreach( $states as $state ){
+                    foreach( $states as $current_state ){
                     ?>
-                    <option value="<?php echo $state; ?>"><?php echo $state; ?></option>
+                    <option value="<?php echo $current_state; ?>" <?php echo ($state===$current_state) ? "selected" : "" ?>><?php echo $current_state; ?></option>
                     <?php
                     }
                     ?>
@@ -114,7 +114,7 @@ class Address{
             update_post_meta( $post_id, '_city', sanitize_text_field( $_POST['city'] ) );
         }
 
-        // state
+        // state array
         if ( isset( $_POST['state'] ) ) {
             update_post_meta( $post_id, '_state', $_POST['state'] );
         }
