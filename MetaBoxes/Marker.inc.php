@@ -40,7 +40,7 @@ class Marker {
 
         ?>
         
-        Latitude: <input type="number" step="any" name="latitude" value="<?php echo $latitude; ?>" placeholder="Enter a latitude" />
+        Latitude: <input type="number" step="any" name="latitude" value="<?php echo $latitude; ?>" placeholder="Enter a latitude" /><br />
         Longitude: <input type="number" step="any" name="longitude" value="<?php echo $longitude; ?>" placeholder="Enter a longitude" />
 
         <?php
