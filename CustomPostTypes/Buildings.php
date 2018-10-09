@@ -19,12 +19,12 @@ class Buildings{
     }
 
     function init(){
-        // Hooking up our emergency phones custom post type to theme setup
-        add_action( 'init', array( $this, 'create_emergency_phones_post_type' ) );
+        // Hooking up our buildings custom post type to theme setup
+        add_action( 'init', array( $this, 'create_buildings_post_type' ) );
     }
 
-    // Create Emergency Phones Custom Post Type
-    function create_emergency_phones_post_type() {
+    // Create Buildings Custom Post Type
+    function create_buildings_post_type() {
         register_post_type( $this->slug,
         // Options
             array(
