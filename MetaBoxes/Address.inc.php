@@ -63,7 +63,7 @@ class Address{
             </div>
             <div class="inline">
                 State:<br />
-                <select>
+                <select name="state[]">
                     <option value="Select a state">Select a state</option>
                     <?php
                     foreach( $states as $state ){
@@ -103,8 +103,26 @@ class Address{
             return;
         }
         
-        // store accessibility meta box fields
-        // TODO: store address data
+        // store address meta box fields
+        // street string
+        if ( isset( $_REQUEST['street'] ) ) {
+            update_post_meta( $post_id, '_street', sanitize_text_field( $_POST['street'] ) );
+        }
+        
+        // city string
+        if ( isset( $_REQUEST['city'] ) ) {
+            update_post_meta( $post_id, '_city', sanitize_text_field( $_POST['city'] ) );
+        }
+
+        // state
+        if ( isset( $_POST['state'] ) ) {
+            update_post_meta( $post_id, '_state', $_POST['state'] );
+        }
+
+        // zip string
+        if ( isset( $_REQUEST['zip'] ) ) {
+            update_post_meta( $post_id, '_zip', sanitize_text_field( $_POST['zip'] ) );
+        }
     }
 
     // Configure REST API to include location data
@@ -117,9 +135,18 @@ class Address{
 
     // Function that grabs the meta data for the REST API
     function parse_meta_data_for_api( $post ) {
-        // TODO: parse data for API
+        $street = get_post_meta( $post["id"], '_street', true );
+        $city = get_post_meta( $post["id"], '_city', true );
+        $state = get_post_meta( $post["id"], '_state', true )[0]; // returns an array with one element, so grab first element
+        $zip = get_post_meta( $post["id"], '_zip', true );
+
+        return array(
+            'street' => $street,
+            'city' => $city,
+            'state' => $state,
+            'zip' => $zip
+        );
     }
-    
 }
 
 ?>
