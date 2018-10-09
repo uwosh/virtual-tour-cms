@@ -13,3 +13,4 @@ foreach ( glob( get_template_directory() . "/CustomPostTypes/*.php" ) as $filena
 // Instantiating the custom posts
 $emergency_phones = new EmergencyPhones();
 $parking_lots = new ParkingLots();
+$buildings = new Buildings();
