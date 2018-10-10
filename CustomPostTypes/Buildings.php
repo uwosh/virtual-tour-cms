@@ -19,7 +19,7 @@ class Buildings{
         // Declaring meta boxes for the custom post type
         $this->location_marker = new Marker( $this->slug, $this->singular_label );
         $this->address = new Address( $this->slug, $this->singular_label );
-        $this->building_has_accessible_entrance = new BuildingHasAccessibleEntrance( $this->slug, $this->singular_label );
+        $this->building_has_accessible_entrance = new IsAccessible( $this->slug, $this->singular_label );
         $this->full_image = new FullImage( $this->slug, $this->singular_label );
         $this->tooltip_image = new TooltipImage( $this->slug, $this->singular_label );
 

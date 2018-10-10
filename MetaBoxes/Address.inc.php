@@ -86,7 +86,7 @@ class Address{
     }
 
     /**
-     * Store location meta box data
+     * Store address meta box data
      *
      * @param int $post_id The post ID.
      */
