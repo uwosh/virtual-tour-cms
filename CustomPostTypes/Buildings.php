@@ -9,6 +9,7 @@ class Buildings{
     private $building_has_accessible_entrance;
     private $full_image;
     private $tooltip_image;
+    private $categories;
 
     public function __construct(){
         // Declaring variables for the custom post type
@@ -22,6 +23,7 @@ class Buildings{
         $this->building_has_accessible_entrance = new IsAccessible( $this->slug, $this->singular_label );
         $this->full_image = new FullImage( $this->slug, $this->singular_label );
         $this->tooltip_image = new TooltipImage( $this->slug, $this->singular_label );
+        $this->categories = new BuildingCategories( $this->slug, $this->singular_label );
 
         $this->init();
     }
@@ -74,5 +76,6 @@ class Buildings{
         add_meta_box( $this->slug . '-accessible-entrance', $this->singular_label . ' Has Accessible Entrances', array( $this->building_has_accessible_entrance, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-full-image', $this->singular_label . ' Full Image', array( $this->full_image, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-tooltip-image', $this->singular_label . ' Tooltip Image', array( $this->tooltip_image, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-categories', $this->singular_label . ' Categories', array( $this->categories, 'create_meta_box' ), $this->slug, 'side');
     }
 }
