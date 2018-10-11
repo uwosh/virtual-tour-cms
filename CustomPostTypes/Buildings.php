@@ -10,6 +10,7 @@ class Buildings{
     private $full_image;
     private $tooltip_image;
     private $categories;
+    private $tour;
 
     public function __construct(){
         // Declaring variables for the custom post type
@@ -24,6 +25,7 @@ class Buildings{
         $this->full_image = new FullImage( $this->slug, $this->singular_label );
         $this->tooltip_image = new TooltipImage( $this->slug, $this->singular_label );
         $this->categories = new BuildingCategories( $this->slug, $this->singular_label );
+        $this->tour = new Tour( $this->slug, $this->singular_label );
 
         $this->init();
     }
@@ -77,5 +79,6 @@ class Buildings{
         add_meta_box( $this->slug . '-full-image', $this->singular_label . ' Full Image', array( $this->full_image, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-tooltip-image', $this->singular_label . ' Tooltip Image', array( $this->tooltip_image, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-categories', $this->singular_label . ' Categories', array( $this->categories, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-tour', $this->singular_label . ' Tour', array( $this->tour, 'create_meta_box' ), $this->slug, 'normal');
     }
 }
