@@ -41,8 +41,17 @@ class Tour {
         ?>
         <input type="radio" name="tour_enabled" value="1" <?php checked( $tour_enabled, '1' ); ?> />Enable
 		<input type="radio" name="tour_enabled" value="0" <?php checked( $tour_enabled, '0' ); ?> />Disable
-
-        <!-- TODO: make HTML to have a TinyMCE editor window for tour info page that only shows if the enable radio button is active -->
+        <br>
+        <br>
+        <!-- TinyMCE editor window for tour info page  -->
+        <!-- TODO: editor only shows if the enable radio button is active -->
+        <?php 
+        
+            $content = '';
+            $editor_id = 'mycustomeditor';
+            wp_editor( $content, $editor_id, $settings = array() ); 
+        
+        ?> 
 
         <?php
     }
