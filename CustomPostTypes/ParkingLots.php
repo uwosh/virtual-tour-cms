@@ -17,17 +17,17 @@ class ParkingLots{
         // Declaring meta boxes for the custom post type
         $this->location_marker = new Marker( $this->slug, $this->singular_label );
         $this->lot_type = new LotType( $this->slug, $this->singular_label );
-        $this->is_accessible_parking_lot = new IsAccessibleParkingLot( $this->slug, $this->singular_label );
+        $this->is_accessible_parking_lot = new IsAccessible( $this->slug, $this->singular_label );
 
         $this->init();
     }
 
     function init(){
-        // Hooking up our emergency phones custom post type to theme setup
+        // Hooking up our parking lots custom post type to theme setup
         add_action( 'init', array( $this, 'create_emergency_phones_post_type' ) );
     }
 
-    // Create Emergency Phones Custom Post Type
+    // Create parking lots Custom Post Type
     function create_emergency_phones_post_type() {
         register_post_type( $this->slug,
         // Options
