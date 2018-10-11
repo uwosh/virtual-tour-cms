@@ -39,7 +39,10 @@ class Address{
 
         $street = get_post_meta( $post->ID, '_street', true );
         $city = get_post_meta( $post->ID, '_city', true );
-        $state = get_post_meta( $post->ID, '_state', true )[0]; // always returns an array of length one, so select first element
+        $state = get_post_meta( $post->ID, '_state', true );
+        if( !empty( $state ) ){
+            $state = $state[0]; // array of length one, so select first element
+        }
         $zip = get_post_meta( $post->ID, '_zip', true );
 
         ?>
@@ -83,7 +86,7 @@ class Address{
     }
 
     /**
-     * Store location meta box data
+     * Store address meta box data
      *
      * @param int $post_id The post ID.
      */

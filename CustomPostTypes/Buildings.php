@@ -6,6 +6,11 @@ class Buildings{
     private $plural_label;
     private $location_marker;
     private $address;
+    private $building_has_accessible_entrance;
+    private $full_image;
+    private $tooltip_image;
+    private $categories;
+    private $tour;
 
     public function __construct(){
         // Declaring variables for the custom post type
@@ -16,6 +21,11 @@ class Buildings{
         // Declaring meta boxes for the custom post type
         $this->location_marker = new Marker( $this->slug, $this->singular_label );
         $this->address = new Address( $this->slug, $this->singular_label );
+        $this->building_has_accessible_entrance = new IsAccessible( $this->slug, $this->singular_label );
+        $this->full_image = new FullImage( $this->slug, $this->singular_label );
+        $this->tooltip_image = new TooltipImage( $this->slug, $this->singular_label );
+        $this->categories = new BuildingCategories( $this->slug, $this->singular_label );
+        $this->tour = new Tour( $this->slug, $this->singular_label );
 
         $this->init();
     }
@@ -65,5 +75,10 @@ class Buildings{
     function meta_box_callback(){
         add_meta_box( $this->slug . '-location', $this->singular_label . ' Location', array( $this->location_marker, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-address', $this->singular_label . ' Address', array( $this->address, 'create_meta_box' ), $this->slug, 'normal');
+        add_meta_box( $this->slug . '-accessible-entrance', $this->singular_label . ' Has Accessible Entrances', array( $this->building_has_accessible_entrance, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-full-image', $this->singular_label . ' Full Image', array( $this->full_image, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-tooltip-image', $this->singular_label . ' Tooltip Image', array( $this->tooltip_image, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-categories', $this->singular_label . ' Categories', array( $this->categories, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-tour', $this->singular_label . ' Tour', array( $this->tour, 'create_meta_box' ), $this->slug, 'normal');
     }
 }
