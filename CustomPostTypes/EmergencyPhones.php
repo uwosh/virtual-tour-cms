@@ -61,6 +61,6 @@ class EmergencyPhones{
     
     // Meta box setup callback function
     function meta_box_callback(){
-        add_meta_box( $this->slug . '-address', $this->singular_label . ' Location', array( $this->location_marker, 'create_meta_box' ), $this->slug, 'side');
+        add_meta_box( $this->slug . '-location', $this->singular_label . ' Location', array( $this->location_marker, 'create_meta_box' ), $this->slug, 'side');
     }
 }
