@@ -39,20 +39,42 @@ class Tour {
         // TODO: make tour description content area variable to store tour page info
 
         ?>
-        <input type="radio" name="tour_enabled" value="1" <?php checked( $tour_enabled, '1' ); ?> />Enable
-		<input type="radio" name="tour_enabled" value="0" <?php checked( $tour_enabled, '0' ); ?> />Disable
+        <input type="radio" id="radio_tour_enable" name="tour_enabled" value="1"  <?php checked( $tour_enabled, '1' ); ?>/>
+        <label for="radio_tour_enable">Enable</label>
+		<input type="radio" id="radio_tour_disable" name="tour_enabled" value="0" <?php checked( $tour_enabled, '0' ); ?> />
+        <label for="radio_tour_dsisable">Disable</label>
         <br>
         <br>
         <!-- TinyMCE editor window for tour info page  -->
-        <!-- TODO: editor only shows if the enable radio button is active -->
+        <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->
+        
         <?php 
         
             $content = '';
-            $editor_id = 'mycustomeditor';
+            $editor_id = 'tour_editor';
             wp_editor( $content, $editor_id, $settings = array() ); 
         
         ?> 
+        <!-- editor only shows if the enable radio button is active -->
+        <script type="text/javascript">
+            //jquery has to be recognized for this to run
+            jQuery(document).ready(function ($) {
+                    var editor_id = "<?php echo $editor_id ?>";
 
+                    //hide text editor by default
+                    $("#wp-" + editor_id + "-wrap").hide();
+
+                    //if enable -> show editor
+                    $("#radio_tour_enable").click(function(){
+                        $("#wp-" + editor_id + "-wrap").show();
+                    });
+                    // if disable -> hide editor
+                    $("#radio_tour_disable").click(function(){
+                        $("#wp-" + editor_id + "-wrap").hide();
+                    });
+                    
+            });
+        </script>
         <?php
     }
 
