@@ -37,14 +37,14 @@ class DetailPage {
         // make sure the form request comes from WordPress
         wp_nonce_field( basename( __FILE__ ), $this->area_name . '_meta_box_nonce' );
 
-        $is_enabled = get_post_meta( $post->ID, '_is_enabled', true );
-        $description = get_post_meta( $post->ID, '_description', true );
+        $is_enabled = get_post_meta( $post->ID, '_' . $this->area_name . '_is_enabled', true );
+        $description = get_post_meta( $post->ID, '_' . $this->area_name . '_description', true );
 
         ?>
-        <input type="radio" id="radio_enable" name="is_enabled" value="1" onclick="show_wp_editor()" <?php checked( $is_enabled, '1' ); ?>/>
-        <label for="radio_enable">Enable</label>
-	    <input type="radio" id="radio_disable" name="is_enabled" value="0" onclick="hide_wp_editor()" <?php checked( $is_enabled, '0' ); ?> />
-        <label for="radio_disable">Disable</label>
+        <input type="radio" id="<?php echo $this->area_name; ?>_radio_enable" name="<?php echo $this->area_name; ?>_is_enabled" value="1" onclick="show_<?php echo $this->area_name; ?>_wp_editor()" <?php checked( $is_enabled, '1' ); ?>/>
+        <label for="<?php echo $this->area_name; ?>radio_enable">Enable</label>
+	    <input type="radio" id="<?php echo $this->area_name; ?>_radio_disable" name="<?php echo $this->area_name; ?>_is_enabled" value="0" onclick="hide_<?php echo $this->area_name; ?>_wp_editor()" <?php checked( $is_enabled, '0' ); ?> />
+        <label for="<?php echo $this->area_name; ?>_radio_disable">Disable</label>
 
         <!-- TinyMCE editor window for detail page info page  -->
         <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->        
@@ -62,21 +62,21 @@ class DetailPage {
         
         <!-- editor only shows if the enable radio button is active -->
         <script type="text/javascript">
-            var editor_id = "<?php echo $editor_id ?>";
-            var is_enabled = "<?php echo $is_enabled ?>";
+            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id ?>";
+            var <?php echo $this->area_name; ?>_is_enabled = <?php echo $is_enabled ?>;
 
-            window.onload = function(){
-                if(is_enabled == 1){
-                    show_wp_editor();
+            window.addEventListener("load", function(event){
+                if(<?php echo $this->area_name; ?>_is_enabled == 1){
+                    show_<?php echo $this->area_name; ?>_wp_editor();
                 }
+            });
+
+            function show_<?php echo $this->area_name; ?>_wp_editor(){
+                $("#wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap").show();
             }
 
-            function show_wp_editor(){
-                $("#wp-" + editor_id + "-wrap").show();
-            }
-
-            function hide_wp_editor(){
-                $("#wp-" + editor_id + "-wrap").hide();
+            function hide_<?php echo $this->area_name; ?>_wp_editor(){
+                $("#wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap").hide();
             }
         </script>
         <?php
@@ -105,13 +105,13 @@ class DetailPage {
         
         // store detail page meta box fields
         // store the data if the detail page is enabled
-        if ( isset( $_REQUEST['is_enabled'] ) ) {
-            update_post_meta( $post_id, '_is_enabled', sanitize_text_field( $_POST['is_enabled'] ) );
+        if ( isset( $_REQUEST[$this->area_name . '_is_enabled'] ) ) {
+            update_post_meta( $post_id, '_' . $this->area_name . '_is_enabled', sanitize_text_field( $_POST[$this->area_name . '_is_enabled'] ) );
         }
 
         // store the detail page description info from the TinyMCE editor
         if ( isset( $_REQUEST[$this->area_name . '_editor'] ) ) {
-            update_post_meta( $post_id, '_description', $_POST[$this->area_name . '_editor'] ); // we don't sanitize the text field here because we want to keep the HTML formatting
+            update_post_meta( $post_id, '_' . $this->area_name . '_description', $_POST[$this->area_name . '_editor'] ); // we don't sanitize the text field here because we want to keep the HTML formatting
         }
     }
 
@@ -125,8 +125,8 @@ class DetailPage {
 
     // Function that grabs the meta data for the REST API
     function parse_meta_data_for_api( $post ) {
-        $is_enabled = get_post_meta( $post["id"], '_is_enabled', true );
-        $description = get_post_meta( $post["id"], '_description', true );
+        $is_enabled = get_post_meta( $post["id"], '_' . $this->area_name . '_is_enabled', true );
+        $description = get_post_meta( $post["id"], '_' . $this->area_name . '_description', true );
         if( $is_enabled === "1" ){
             return $description;
         } else{

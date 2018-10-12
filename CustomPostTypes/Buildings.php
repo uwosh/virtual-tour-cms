@@ -11,6 +11,9 @@ class Buildings{
     private $tooltip_image;
     private $categories;
     private $tour;
+    private $sustainability;
+    private $bathrooms;
+    private $dining;
 
     public function __construct(){
         // Declaring variables for the custom post type
@@ -26,6 +29,9 @@ class Buildings{
         $this->tooltip_image = new TooltipImage( $this->slug, $this->singular_label );
         $this->categories = new BuildingCategories( $this->slug, $this->singular_label );
         $this->tour = new DetailPage( $this->slug, $this->singular_label, 'tour' );
+        $this->sustainability = new DetailPage( $this->slug, $this->singular_label, 'sustainability' );
+        $this->bathrooms = new DetailPage( $this->slug, $this->singular_label, 'bathrooms' );
+        $this->dining = new DetailPage( $this->slug, $this->singular_label, 'dining' );
 
         $this->init();
     }
@@ -80,5 +86,8 @@ class Buildings{
         add_meta_box( $this->slug . '-tooltip-image', $this->singular_label . ' Tooltip Image', array( $this->tooltip_image, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-categories', $this->singular_label . ' Categories', array( $this->categories, 'create_meta_box' ), $this->slug, 'side');
         add_meta_box( $this->slug . '-tour', $this->singular_label . ' Tour', array( $this->tour, 'create_meta_box' ), $this->slug, 'normal');
+        add_meta_box( $this->slug . '-sustainability', $this->singular_label . ' Sustainability', array( $this->sustainability, 'create_meta_box' ), $this->slug, 'normal');
+        add_meta_box( $this->slug . '-bathrooms', $this->singular_label . ' Bathrooms', array( $this->bathrooms, 'create_meta_box' ), $this->slug, 'normal');
+        add_meta_box( $this->slug . '-dining', $this->singular_label . ' Dining', array( $this->dining, 'create_meta_box' ), $this->slug, 'normal');
     }
 }
