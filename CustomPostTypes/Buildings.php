@@ -25,7 +25,7 @@ class Buildings{
         $this->full_image = new FullImage( $this->slug, $this->singular_label );
         $this->tooltip_image = new TooltipImage( $this->slug, $this->singular_label );
         $this->categories = new BuildingCategories( $this->slug, $this->singular_label );
-        $this->tour = new Tour( $this->slug, $this->singular_label );
+        $this->tour = new DetailPage( $this->slug, $this->singular_label, 'tour' );
 
         $this->init();
     }
