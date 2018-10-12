@@ -41,13 +41,13 @@ class Tour {
         ?>
         <input type="radio" id="radio_tour_enable" name="tour_enabled" value="1"  <?php checked( $tour_enabled, '1' ); ?>/>
         <label for="radio_tour_enable">Enable</label>
-		<input type="radio" id="radio_tour_disable" name="tour_enabled" value="0" <?php checked( $tour_enabled, '0' ); ?> />
-        <label for="radio_tour_dsisable">Disable</label>
+	<input type="radio" id="radio_tour_disable" name="tour_enabled" value="0" <?php checked( $tour_enabled, '0' ); ?> />
+        <label for="radio_tour_disable">Disable</label>
         <br>
         <br>
+
         <!-- TinyMCE editor window for tour info page  -->
-        <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->
-        
+        <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->        
         <?php 
         
             $content = '';
