@@ -39,41 +39,46 @@ class Tour {
         // TODO: make tour description content area variable to store tour page info
 
         ?>
-        <input type="radio" id="radio_tour_enable" name="tour_enabled" value="1"  <?php checked( $tour_enabled, '1' ); ?>/>
+        <input type="radio" id="radio_tour_enable" name="tour_enabled" value="1" onclick="show_wp_editor()" <?php checked( $tour_enabled, '1' ); ?>/>
         <label for="radio_tour_enable">Enable</label>
-	<input type="radio" id="radio_tour_disable" name="tour_enabled" value="0" <?php checked( $tour_enabled, '0' ); ?> />
+	    <input type="radio" id="radio_tour_disable" name="tour_enabled" value="0" onclick="hide_wp_editor()" <?php checked( $tour_enabled, '0' ); ?> />
         <label for="radio_tour_disable">Disable</label>
-        <br>
-        <br>
+        <!-- <br>
+        <br> -->
 
         <!-- TinyMCE editor window for tour info page  -->
         <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->        
         <?php 
-        
             $content = '';
             $editor_id = 'tour_editor';
             wp_editor( $content, $editor_id, $settings = array() ); 
+        ?>
+
+        <style>
+        #wp-tour_editor-wrap{
+            display: none;
+            padding-top: 20px;
+        }
+        </style>
         
-        ?> 
         <!-- editor only shows if the enable radio button is active -->
         <script type="text/javascript">
-            //jquery has to be recognized for this to run
-            jQuery(document).ready(function ($) {
-                    var editor_id = "<?php echo $editor_id ?>";
+            var editor_id = "<?php echo $editor_id ?>";
+            var tour_enabled = "<?php echo $tour_enabled ?>";
 
-                    //hide text editor by default
-                    $("#wp-" + editor_id + "-wrap").hide();
+            window.onload = function(){
+                if(tour_enabled == 1){
+                    show_wp_editor();
+                }
+            }
 
-                    //if enable -> show editor
-                    $("#radio_tour_enable").click(function(){
-                        $("#wp-" + editor_id + "-wrap").show();
-                    });
-                    // if disable -> hide editor
-                    $("#radio_tour_disable").click(function(){
-                        $("#wp-" + editor_id + "-wrap").hide();
-                    });
-                    
-            });
+            function show_wp_editor(){
+                $("#wp-" + editor_id + "-wrap").show();
+            }
+
+            function hide_wp_editor(){
+                $("#wp-" + editor_id + "-wrap").hide();
+            }
         </script>
         <?php
     }
