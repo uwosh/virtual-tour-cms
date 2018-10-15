@@ -21,9 +21,4 @@ $parking_lots = new ParkingLots();
 $buildings = new Buildings();
 
 // Creating settings pages
-function building_categories_register_options_page(){
-    // Instantiating the building categories page
-    $building_categories = new BuildingCatagories();
-    add_options_page( "Building Categories", "Building Categories", "administrator", "building-categories", array( $building_categories, "building_categories_options_page" ) );
-}
-add_action( "admin_menu", "building_categories_register_options_page" );
+$building_categories = new BuildingCatagories();
