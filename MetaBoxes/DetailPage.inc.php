@@ -69,8 +69,6 @@ class DetailPage {
             var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id; ?>";
             var <?php echo $this->area_name; ?>_is_enabled = <?php echo ( $is_enabled == "" ? "0" : $is_enabled ); ?>;
 
-            console.log("var title: <?php  echo $this->area_name; ?>_editor_id");
-            console.log("var title value: <?php echo $editor_id  ?>");
 
             window.addEventListener("load", function(event){
                 if(<?php echo $this->area_name; ?>_is_enabled == 1){
@@ -80,8 +78,6 @@ class DetailPage {
 
             function show_<?php echo $this->area_name; ?>_wp_editor(){
                 $("#wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap").show();
-                console.log("show_<?php echo $this->area_name;  ?>_wp_editor: This function ran");
-                console.log("id.show: wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap");
             }
 
             function hide_<?php echo $this->area_name; ?>_wp_editor(){
