@@ -41,10 +41,13 @@ class DetailPage {
         $description = get_post_meta( $post->ID, '_' . $this->area_name . '_description', true );
 
         ?>
+
         <input type="radio" id="<?php echo $this->area_name; ?>_radio_enable" name="<?php echo $this->area_name; ?>_is_enabled" value="1" onclick="show_<?php echo $this->area_name; ?>_wp_editor()" <?php checked( $is_enabled, '1' ); ?>/>
         <label for="<?php echo $this->area_name; ?>radio_enable">Enable</label>
 	    <input type="radio" id="<?php echo $this->area_name; ?>_radio_disable" name="<?php echo $this->area_name; ?>_is_enabled" value="0" onclick="hide_<?php echo $this->area_name; ?>_wp_editor()" <?php checked( $is_enabled, '0' ); ?> />
         <label for="<?php echo $this->area_name; ?>_radio_disable">Disable</label>
+
+
 
         <!-- TinyMCE editor window for detail page info page  -->
         <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->        
@@ -62,8 +65,10 @@ class DetailPage {
         
         <!-- editor only shows if the enable radio button is active -->
         <script type="text/javascript">
-            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id ?>";
-            var <?php echo $this->area_name; ?>_is_enabled = <?php echo $is_enabled ?>;
+
+            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id; ?>";
+            var <?php echo $this->area_name; ?>_is_enabled = <?php echo ( $is_enabled == "" ? "0" : $is_enabled ); ?>;
+
 
             window.addEventListener("load", function(event){
                 if(<?php echo $this->area_name; ?>_is_enabled == 1){
@@ -78,6 +83,7 @@ class DetailPage {
             function hide_<?php echo $this->area_name; ?>_wp_editor(){
                 $("#wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap").hide();
             }
+
         </script>
         <?php
     }
