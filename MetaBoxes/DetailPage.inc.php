@@ -41,10 +41,13 @@ class DetailPage {
         $description = get_post_meta( $post->ID, '_' . $this->area_name . '_description', true );
 
         ?>
+
         <input type="radio" id="<?php echo $this->area_name; ?>_radio_enable" name="<?php echo $this->area_name; ?>_is_enabled" value="1" onclick="show_<?php echo $this->area_name; ?>_wp_editor()" <?php checked( $is_enabled, '1' ); ?>/>
         <label for="<?php echo $this->area_name; ?>radio_enable">Enable</label>
 	    <input type="radio" id="<?php echo $this->area_name; ?>_radio_disable" name="<?php echo $this->area_name; ?>_is_enabled" value="0" onclick="hide_<?php echo $this->area_name; ?>_wp_editor()" <?php checked( $is_enabled, '0' ); ?> />
         <label for="<?php echo $this->area_name; ?>_radio_disable">Disable</label>
+
+
 
         <!-- TinyMCE editor window for detail page info page  -->
         <!-- resource: https://codex.wordpress.org/Function_Reference/wp_editor -->        
@@ -62,11 +65,9 @@ class DetailPage {
         
         <!-- editor only shows if the enable radio button is active -->
         <script type="text/javascript">
-            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id ?>";
 
-            //Console error: Uncaught SyntaxError: Unexpected token ;
-            //this variable doesn't get set to a value
-            var <?php echo $this->area_name; ?>_is_enabled = <?php echo $is_enabled ?>;
+            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id; ?>";
+            var <?php echo $this->area_name; ?>_is_enabled = <?php echo ( $is_enabled == "" ? "0" : $is_enabled ); ?>;
 
             console.log("var title: <?php  echo $this->area_name; ?>_editor_id");
             console.log("var title value: <?php echo $editor_id  ?>");
@@ -79,13 +80,14 @@ class DetailPage {
 
             function show_<?php echo $this->area_name; ?>_wp_editor(){
                 $("#wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap").show();
-                console.log("show_<?php $this->area_name;  ?>_wp_editor: This function ran");
-                console.log("id.show: wp-<?php $this->area_name; ?>-wrap");
+                console.log("show_<?php echo $this->area_name;  ?>_wp_editor: This function ran");
+                console.log("id.show: wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap");
             }
 
             function hide_<?php echo $this->area_name; ?>_wp_editor(){
                 $("#wp-" + <?php echo $this->area_name; ?>_editor_id + "-wrap").hide();
             }
+
         </script>
         <?php
     }
