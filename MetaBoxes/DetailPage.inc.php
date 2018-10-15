@@ -62,8 +62,8 @@ class DetailPage {
         
         <!-- editor only shows if the enable radio button is active -->
         <script type="text/javascript">
-            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id ?>";
-            var <?php echo $this->area_name; ?>_is_enabled = <?php echo $is_enabled ?>;
+            var <?php echo $this->area_name; ?>_editor_id = "<?php echo $editor_id; ?>";
+            var <?php echo $this->area_name; ?>_is_enabled = <?php echo ( $is_enabled == "" ? "0" : $is_enabled ); ?>;
 
             window.addEventListener("load", function(event){
                 if(<?php echo $this->area_name; ?>_is_enabled == 1){
