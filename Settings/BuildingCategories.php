@@ -1,14 +1,26 @@
 <?php
 
 class BuildingCatagories {
+    private $number_of_building_categories;
+    
     public function __construct(){
+        if( !get_option( 'number_of_building_categories' ) ){
+            update_option( 'number_of_building_categories', 1 );
+        }
+
+        $this->number_of_building_categories = get_option( 'number_of_building_categories' );
+
         $this->init();
     }
     
     function init(){
         // Setting up the hooks
         add_action( "admin_menu", array( $this, "building_categories_register_options_page" ) );
-        add_action("admin_init", array( $this, "display_building_category_settings" ) );
+        add_action( "admin_init", array( $this, "display_building_category_settings" ) );
+
+        // Setting up the AJAX calls
+        add_action( 'wp_ajax_add_new_building_category', array( $this, 'add_new_building_category_runner' ) );
+        add_action( 'wp_ajax_remove_building_category', array( $this, 'remove_building_category_runner' ) );
     }
 
     function building_categories_register_options_page(){
@@ -25,72 +37,58 @@ class BuildingCatagories {
         );
         ?>
         <h1>Hi there!</h1>
-        <form method="post" action="options.php">
-        <?php
-            //add_settings_section callback is displayed here. For every new section we need to call settings_fields.
-            settings_fields("building_category");
-                    
-            // all the add_settings_field callbacks is displayed here
-            do_settings_sections("building-category-options");
-        
-            // Add the submit button to serialize the options
-            submit_button(); 
-        ?>
-        </form>
-        <script>
+        <?php submit_button( "Add Building Category", "button-secondary", '', true, array( 'id' => 'add-building-category' ) ); ?>
+        <?php submit_button( "Remove Building Category", "button-secondary", '', true, array( 'id' => 'remove-building-category' ) ); ?>
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            var add_new_building_category = {
+                'action': 'add_new_building_category'
+            };
+            var remove_building_category = {
+                'action': 'remove_building_category'
+            };
+            jQuery('#add-building-category').click(function() {
+                jQuery.post(ajaxurl, add_new_building_category, function(response) {
+                    alert(response);
+                    window.location.reload(true);
+                });
+            });
+            jQuery('#remove-building-category').click(function() {
+                jQuery.post(ajaxurl, remove_building_category, function(response) {
+                    alert(response);
+                    window.location.reload(true);
+                });
+            });
+        });
+        </script>
+        Number of building categories: <?php echo $this->number_of_building_categories; ?>
+        <script type="text/javascript">
         jQuery( function($) {
             $( "#accordion" ).accordion();
         } );
         </script>
-        <div id="accordion">
-            <h3>Section 1</h3>
-            <div>
-                <p>
-                Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-                ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-                amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-                odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-                </p>
+        <form method="post" action="options.php">
+            <div id="accordion">
+                <?php
+                for( $i=0; $i<$this->number_of_building_categories; $i++ ){
+                ?>
+                <h3>Category <?php echo $i+1; ?></h3>
+                <div>
+                <?php
+                    //add_settings_section callback is displayed here. For every new section we need to call settings_fields.
+                    settings_fields("building_category");
+                            
+                    // all the add_settings_field callbacks is displayed here
+                    do_settings_sections("building-category-options");
+                ?>
+                </div>
+                <?php
+                }
+                ?>
             </div>
-            <h3>Section 2</h3>
-            <div>
-                <p>
-                Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-                purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-                velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-                suscipit faucibus urna.
-                </p>
-            </div>
-            <h3>Section 3</h3>
-            <div>
-                <p>
-                Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-                Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-                ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-                lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-                </p>
-                <ul>
-                    <li>List item one</li>
-                    <li>List item two</li>
-                    <li>List item three</li>
-                </ul>
-            </div>
-            <h3>Section 4</h3>
-            <div>
-                <p>
-                Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-                et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-                faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-                mauris vel est.
-                </p>
-                <p>
-                Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-                inceptos himenaeos.
-                </p>
-            </div>
-        </div>
+        </form>
         <?php
+        submit_button();
     }
 
     function display_building_category_settings(){
@@ -133,5 +131,37 @@ class BuildingCatagories {
         ?>
             <input type="text" name="category_learn_more_url" id="category_learn_more_url" value="<?php echo get_option( 'category_learn_more_url' ); ?>" />
         <?php
+    }
+
+    function add_new_building_category_runner(){
+        $this->increment_number_of_building_categories();
+        echo "Added new building category successfully!";
+
+        wp_die();
+    }
+
+    function remove_building_category_runner(){
+        try{
+            $this->decrement_number_of_building_categories();
+            echo "Removed building category successfully!";
+        } catch( Exception $e ){
+            echo "Error: " . $e->getMessage() . ".";
+        }
+
+        wp_die();
+    }
+
+    function increment_number_of_building_categories(){
+        $this->number_of_building_categories++;
+        update_option( 'number_of_building_categories', $this->number_of_building_categories );
+    }
+
+    function decrement_number_of_building_categories(){
+        if( $this->number_of_building_categories!=1 ){
+            $this->number_of_building_categories--;
+            update_option( 'number_of_building_categories', $this->number_of_building_categories );
+        } else{
+            throw new Exception( 'It is not possible to remove the last remaining building category' );
+        }
     }
 }
