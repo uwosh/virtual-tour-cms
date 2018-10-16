@@ -14,3 +14,4 @@ foreach ( glob( get_template_directory() . "/CustomPostTypes/*.php" ) as $filena
 $emergency_phones = new EmergencyPhones();
 $parking_lots = new ParkingLots();
 $buildings = new Buildings();
+$building_categories = new BuildingCatagoriesPost();
