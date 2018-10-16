@@ -10,15 +10,8 @@ foreach ( glob( get_template_directory() . "/CustomPostTypes/*.php" ) as $filena
     include( $filename );
 }
 
-// Includes all files in the Settings directory
-foreach ( glob( get_template_directory() . "/Settings/*.php" ) as $filename ){
-    include( $filename );
-}
-
 // Instantiating the custom posts
 $emergency_phones = new EmergencyPhones();
 $parking_lots = new ParkingLots();
 $buildings = new Buildings();
-
-// Creating settings pages
-$building_categories = new BuildingCatagories();
+$building_categories = new BuildingCatagoriesPost();
