@@ -36,6 +36,7 @@ class Address{
         wp_nonce_field( basename( __FILE__ ), 'address_meta_box_nonce' );
 
         $states = array( 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming' );
+        $states = array_reverse($states);
 
         $street = get_post_meta( $post->ID, '_street', true );
         $city = get_post_meta( $post->ID, '_city', true );
@@ -79,7 +80,7 @@ class Address{
             </div>
             <div class="inline">
                 Zip:<br />
-                <input type="number" name="zip" pattern="[0-9]{5}" value="<?php echo $zip; ?>" placeholder="Enter a zip code" />
+                <input type="number" name="zip" pattern="[0-9]{5}" maxlength="5" value="<?php echo $zip; ?>" placeholder="Enter a zip code" />
             </div>
         </div>
         <?php
