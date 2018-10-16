@@ -80,7 +80,7 @@ class Address{
             </div>
             <div class="inline">
                 Zip:<br />
-                <input type="number" name="zip" pattern="[0-9]{5}" maxlength="5" value="<?php echo $zip; ?>" placeholder="Enter a zip code" required/>
+                <input type="text" name="zip" pattern="[0-9]{5}" maxlength="5" value="<?php echo $zip; ?>" placeholder="Enter a zip code" required/>
             </div>
         </div>
         <?php
