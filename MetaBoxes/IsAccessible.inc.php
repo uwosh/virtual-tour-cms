@@ -39,7 +39,7 @@ class isAccessible {
 
         ?>
 
-        <input type="radio" name="isAccessible" value="1" <?php checked( $isAccessible, '1' ); ?> />Yes<br />
+        <input type="radio" name="isAccessible" value="1" <?php checked( $isAccessible, '1' ); ?> required/>Yes<br />
 		<input type="radio" name="isAccessible" value="0" <?php checked( $isAccessible, '0' ); ?> />No
         
         <?php
