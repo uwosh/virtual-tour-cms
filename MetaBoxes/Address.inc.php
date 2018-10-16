@@ -58,16 +58,16 @@ class Address{
         </style>
         <div>
             Street:<br />
-            <input class="street-input" type="text" name="street" value="<?php echo $street; ?>" placeholder="Enter a street address" />
+            <input class="street-input" type="text" name="street" value="<?php echo $street; ?>" placeholder="Enter a street address" required />
         </div>
         <div>
             <div class="inline">
                 City:<br />
-                <input type="text" name="city" value="<?php echo $city; ?>" placeholder="Enter a city" />
+                <input type="text" name="city" value="<?php echo $city; ?>" placeholder="Enter a city" required/>
             </div>
             <div class="inline">
                 State:<br />
-                <select name="state[]">
+                <select name="state[]" required>
                     <option value="" <?php echo ($state==="Select a state") ? "selected" : "" ?>>Select a state</option>
                     <?php
                     foreach( $states as $current_state ){
@@ -80,7 +80,7 @@ class Address{
             </div>
             <div class="inline">
                 Zip:<br />
-                <input type="number" name="zip" pattern="[0-9]{5}" maxlength="5" value="<?php echo $zip; ?>" placeholder="Enter a zip code" />
+                <input type="number" name="zip" pattern="[0-9]{5}" maxlength="5" value="<?php echo $zip; ?>" placeholder="Enter a zip code" required/>
             </div>
         </div>
         <?php
