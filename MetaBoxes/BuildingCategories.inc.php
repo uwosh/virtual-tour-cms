@@ -35,7 +35,12 @@ class BuildingCategories {
         // make sure the form request comes from WordPress
         wp_nonce_field( basename( __FILE__ ), 'building_categories_meta_box_nonce' );
 
-        $building_categories = array( "Academic Facilities", "Athletics", "Academic Services", "Campus Services", "Residence Halls", "Dining", "Student Recreation" );
+        $building_categories = array();
+        $building_categories_details = get_posts( array( 'posts_per_page' => -1, 'post_type' => 'building-categories' ) );
+        foreach( $building_categories_details as $building_category_details ){
+            array_push( $building_categories, $building_category_details->post_title );
+        }
+
         $selected_building_categories = ( get_post_meta( $post->ID, '_building_categories', true ) ) ? get_post_meta( $post->ID, '_building_categories', true ) : array();
 
         foreach( $building_categories as $building_category ){
