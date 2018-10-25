@@ -35,7 +35,7 @@ class LotType {
         // make sure the form request comes from WordPress
         wp_nonce_field( basename( __FILE__ ), 'lot_type_meta_box_nonce' );
 
-        $lot_types = array( "Employee Lot", "Commuter Lot", "Visitor Lot", "Staff Lot", "Resident Lot", "Restricted Lot", "Reserved Lot", "Remote Lot", "Evans Hall Residents", "Stewart Hall Residents", "Fletcher Hall Residents" );
+        $lot_types = array( "Employee Lot", "Commuter Lot", "Visitor Lot", "Staff Lot", "Resident Lot", "Restricted Lot", "Reserved Lot", "Remote Lot", "Evans Hall Residents", "Stewart Hall Residents", "Fletcher Hall Residents", "Event Parking" );
         $selected_lot_types = ( get_post_meta( $post->ID, '_lot_types', true ) ) ? get_post_meta( $post->ID, '_lot_types', true ) : array();
 
         foreach( $lot_types as $lot_type ){
