@@ -38,7 +38,7 @@ class isAccessible {
         $isAccessible = get_post_meta( $post->ID, '_is_accessible', true );
 
         ?>
-
+        <p>Is it wheelchair accessible?</p>
         <input type="radio" name="isAccessible" value="1" <?php checked( $isAccessible, '1' ); ?> required/>Yes<br />
 		<input type="radio" name="isAccessible" value="0" <?php checked( $isAccessible, '0' ); ?> />No
         
